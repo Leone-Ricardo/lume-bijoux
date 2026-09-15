@@ -144,9 +144,6 @@ svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width:
 :focus-visible { outline: 2px solid var(--cor-dourado-medio); outline-offset: 4px; border-radius: 4px; }
 ::selection { background: var(--cor-destaque); color: var(--cor-preto); }
 
-/* =========================================================
-   TEXTURA DE FUNDO (noise sutil)
-   ========================================================= */
 body::after {
   content: '';
   position: fixed;
@@ -158,9 +155,6 @@ body::after {
   mix-blend-mode: multiply;
 }
 
-/* =========================================================
-   SCROLL PROGRESS
-   ========================================================= */
 .scroll-progress {
   position: fixed;
   top: 0;
@@ -173,9 +167,6 @@ body::after {
   box-shadow: 0 0 12px rgba(201, 162, 39, 0.5);
 }
 
-/* =========================================================
-   UTILITÁRIOS
-   ========================================================= */
 .container { width: 100%; max-width: var(--container); margin-inline: auto; padding-inline: var(--pad-x); position: relative; z-index: 2; }
 .section { padding-block: var(--section-y); position: relative; z-index: 2; }
 .section--tinted { background: linear-gradient(180deg, var(--cor-fundo-alt) 0%, var(--cor-fundo) 100%); }
@@ -258,6 +249,7 @@ body::after {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   line-height: 1;
+  text-align: center;
   border: 1px solid transparent;
   border-radius: var(--radius-btn);
   cursor: pointer;
@@ -1093,6 +1085,7 @@ body::after {
   z-index: 3;
   box-shadow: var(--sombra-media);
   cursor: pointer;
+  white-space: nowrap;
 }
 .product-card:hover .product-card__quick,
 .product-card:focus-within .product-card__quick { opacity: 1; transform: translate(-50%, 0); }
@@ -1110,7 +1103,20 @@ body::after {
   letter-spacing: 0.02em;
 }
 .product-card__actions { display: flex; gap: 0.5rem; margin-top: auto; }
-.product-card__actions .btn { flex: 1; padding-inline: 0.75rem; }
+
+/* ✅ CORRIGIDO: botões dos cards com quebra de linha centralizada */
+.product-card__actions .btn {
+  flex: 1;
+  padding: 0.7rem 0.6rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+  min-height: 2.85rem;
+  white-space: normal;
+  text-align: center;
+  word-break: keep-all;
+  hyphens: none;
+}
 
 /* =========================================================
    MATERIAIS
@@ -1440,8 +1446,38 @@ body::after {
   border: 1px solid rgba(232, 201, 122, 0.28);
   border-radius: var(--radius-btn);
 }
-.footer__bottom { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; justify-content: space-between; padding-block: 1.75rem; border-top: 1px solid rgba(255, 255, 255, 0.08); font-size: 0.8125rem; color: rgba(255, 255, 255, 0.4); }
-.footer__bottom p:last-child { font-style: italic; }
+
+/* ✅ Footer bottom com crédito centralizado */
+.footer__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem 1.5rem;
+  justify-content: space-between;
+  align-items: center;
+  padding-block: 1.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.4);
+}
+.footer__bottom > p { flex: 0 1 auto; }
+.footer__bottom > p:last-child { font-style: italic; }
+.footer__credit {
+  font-family: var(--fonte-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  order: 2;
+}
+.footer__credit strong {
+  color: var(--cor-dourado-claro);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+}
+@media (min-width: 768px) {
+  .footer__bottom { flex-wrap: nowrap; }
+  .footer__credit { order: 0; }
+}
 
 /* =========================================================
    WHATSAPP FLUTUANTE
@@ -1537,7 +1573,6 @@ body::after {
 <body>
 <a class="skip-link" href="#main">Pular para o conteúdo principal</a>
 
-<!-- SCROLL PROGRESS -->
 <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
 <!-- HEADER -->
@@ -2202,7 +2237,7 @@ body::after {
       <div class="grid grid--testimonials">
         <figure class="testimonial reveal">
           <div class="testimonial__stars" role="img" aria-label="Avaliação: 5 de 5 estrelas">★★★★★</div>
-          <blockquote class="testimonial__text">“Comprei um colar pro aniversário da minha mãe e ela usou todo dia desde então. O atendimento pelo WhatsApp foi um carinho — me mandaram fotos de verdade das peças.”</blockquote>
+          <blockquote class="testimonial__text">"Comprei um colar pro aniversário da minha mãe e ela usou todo dia desde então. O atendimento pelo WhatsApp foi um carinho — me mandaram fotos de verdade das peças."</blockquote>
           <figcaption class="testimonial__author">
             <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&h=120&q=80" alt="Foto de Juliana Martins" loading="lazy" width="120" height="120">
             <div><strong>Juliana Martins</strong><span>Campo Grande</span></div>
@@ -2211,7 +2246,7 @@ body::after {
 
         <figure class="testimonial reveal">
           <div class="testimonial__stars" role="img" aria-label="Avaliação: 5 de 5 estrelas">★★★★★</div>
-          <blockquote class="testimonial__text">“O brinco não escureceu e olha que eu uso pra trabalhar todo dia. Voltei pra comprar outro par e ainda ganhei um cartãozinho escrito à mão. Fofura total.”</blockquote>
+          <blockquote class="testimonial__text">"O brinco não escureceu e olha que eu uso pra trabalhar todo dia. Voltei pra comprar outro par e ainda ganhei um cartãozinho escrito à mão. Fofura total."</blockquote>
           <figcaption class="testimonial__author">
             <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=120&h=120&q=80" alt="Foto de Patrícia Nogueira" loading="lazy" width="120" height="120">
             <div><strong>Patrícia Nogueira</strong><span>Senador Vasconcelos</span></div>
@@ -2220,7 +2255,7 @@ body::after {
 
         <figure class="testimonial reveal">
           <div class="testimonial__stars" role="img" aria-label="Avaliação: 5 de 5 estrelas">★★★★★</div>
-          <blockquote class="testimonial__text">“Pedi pelo site, escolhi retirar na loja e em 20 minutos estava tudo pronto. A embalagem é linda, dá até pena de abrir. Já virei cliente fiel.”</blockquote>
+          <blockquote class="testimonial__text">"Pedi pelo site, escolhi retirar na loja e em 20 minutos estava tudo pronto. A embalagem é linda, dá até pena de abrir. Já virei cliente fiel."</blockquote>
           <figcaption class="testimonial__author">
             <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=120&h=120&q=80" alt="Foto de Camila Ferreira" loading="lazy" width="120" height="120">
             <div><strong>Camila Ferreira</strong><span>Inhoaíba</span></div>
@@ -2320,6 +2355,7 @@ body::after {
   </div>
   <div class="container footer__bottom">
     <p>© 2026 Lume Bijoux. Todos os direitos reservados.</p>
+    <p class="footer__credit">Desenvolvido por <strong>Leone DiCamp</strong></p>
     <p>Feito com carinho em Campo Grande.</p>
   </div>
 </footer>
@@ -2337,7 +2373,6 @@ body::after {
 (function () {
   'use strict';
 
-  /* ---------- CONFIG ---------- */
   const LOJA = { whatsapp: '5521999990000' };
   const FRETE = {
     retirada: { label: 'Retirar na loja', valor: 0, gratis: true },
@@ -2363,7 +2398,7 @@ body::after {
     if (!w) window.location.href = url;
   }
 
-  /* ---------- SOM (Web Audio API) ---------- */
+  /* SOM */
   let somAtivo = localStorage.getItem(SOUND_KEY) === 'true';
   let audioCtx = null;
 
@@ -2380,9 +2415,7 @@ body::after {
       gain.gain.setValueAtTime(0.06, now);
       gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.22);
       osc.connect(gain).connect(audioCtx.destination);
-      osc.start(now);
-      osc.stop(now + 0.25);
-
+      osc.start(now); osc.stop(now + 0.25);
       const osc2 = audioCtx.createOscillator();
       const gain2 = audioCtx.createGain();
       osc2.type = 'sine';
@@ -2390,8 +2423,7 @@ body::after {
       gain2.gain.setValueAtTime(0.025, now);
       gain2.gain.exponentialRampToValueAtTime(0.0001, now + 0.18);
       osc2.connect(gain2).connect(audioCtx.destination);
-      osc2.start(now);
-      osc2.stop(now + 0.2);
+      osc2.start(now); osc2.stop(now + 0.2);
     } catch (e) {}
   }
 
@@ -2407,8 +2439,7 @@ body::after {
       gain.gain.setValueAtTime(0.03, now);
       gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.08);
       osc.connect(gain).connect(audioCtx.destination);
-      osc.start(now);
-      osc.stop(now + 0.1);
+      osc.start(now); osc.stop(now + 0.1);
     } catch (e) {}
   }
 
@@ -2432,12 +2463,9 @@ body::after {
   });
   atualizarIconeSom();
 
-  /* ---------- HAPTIC ---------- */
-  function haptic(pattern = 8) {
-    if ('vibrate' in navigator) try { navigator.vibrate(pattern); } catch (e) {}
-  }
+  function haptic(p = 8) { if ('vibrate' in navigator) try { navigator.vibrate(p); } catch (e) {} }
 
-  /* ---------- CARRINHO ---------- */
+  /* CARRINHO */
   let cart = carregarCart();
   function carregarCart() {
     try {
@@ -2459,7 +2487,6 @@ body::after {
     playClink(); haptic(12);
     toast(`${produto.name} foi para a sacola`, 'success');
   }
-
   function updateQty(id, delta) {
     const item = cart.find((i) => i.id === id);
     if (!item) return;
@@ -2468,14 +2495,12 @@ body::after {
     salvarCart(); renderCart(); atualizarBadge();
     playTick();
   }
-
   function removeItem(id) {
     const it = cart.find((i) => i.id === id);
     cart = cart.filter((i) => i.id !== id);
     salvarCart(); renderCart(); atualizarBadge();
     if (it) toast(`${it.name} saiu da sacola.`);
   }
-
   function limparCart() { cart = []; salvarCart(); renderCart(); atualizarBadge(); }
 
   function produtoDoCard(card) {
@@ -2489,7 +2514,6 @@ body::after {
   }
   const listarProdutos = () => $$('.product-card[data-id]').map(produtoDoCard);
 
-  /* ---------- RENDER SACOLA ---------- */
   const cartItemsEl = $('#cartItems');
   const cartFooterEl = $('#cartFooter');
   const cartSubtotalEl = $('#cartSubtotal');
@@ -2563,7 +2587,6 @@ body::after {
     if (e.target.closest('[data-remove]')) removeItem(id);
   });
 
-  /* ---------- CHECKOUT ---------- */
   const checkoutModal = $('#checkoutModal');
   const checkoutForm = $('#checkoutForm');
   const addressBlock = $('#addressBlock');
@@ -2717,7 +2740,6 @@ body::after {
     toast('Pedido enviado! Te esperamos no WhatsApp.', 'success', 5000);
   });
 
-  /* ---------- HEADER / DRAWERS / MODAIS ---------- */
   const header = $('#header');
   const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 40);
   window.addEventListener('scroll', onScroll, { passive: true });
@@ -2792,7 +2814,6 @@ body::after {
     });
   });
 
-  /* ---------- BUSCA ---------- */
   const searchOverlay = $('#searchOverlay');
   const searchInput = $('#searchInput');
   const searchResults = $('#searchResults');
@@ -2823,7 +2844,6 @@ body::after {
     if (p) { addToCart(p, 1); fecharBusca(); }
   });
 
-  /* ---------- QUICK VIEW ---------- */
   const quickViewModal = $('#quickView');
   let qvProduto = null, qvQtd = 1;
   function abrirQuickView(p) {
@@ -2848,7 +2868,6 @@ body::after {
     fecharModal(quickViewModal);
   });
 
-  /* ---------- AÇÕES DE PRODUTO ---------- */
   const productGrid = $('#productGrid');
   productGrid?.addEventListener('click', (e) => {
     const c = e.target.closest('.product-card'); if (!c) return;
@@ -2867,7 +2886,6 @@ body::after {
     l.href = `https://wa.me/${LOJA.whatsapp}?text=${encodeURIComponent(txt)}`;
   });
 
-  /* ---------- SCROLL REVEAL ---------- */
   const revealEls = $$('.reveal');
   if ('IntersectionObserver' in window && revealEls.length) {
     const io = new IntersectionObserver((ents) => {
@@ -2881,7 +2899,6 @@ body::after {
     revealEls.forEach((el) => el.classList.add('is-visible'));
   }
 
-  /* ---------- CONTADORES ANIMADOS (STATS) ---------- */
   const statNums = $$('.stat__number[data-count]');
   if (statNums.length && 'IntersectionObserver' in window) {
     const ioStats = new IntersectionObserver((ents) => {
@@ -2907,7 +2924,6 @@ body::after {
     statNums.forEach((el) => ioStats.observe(el));
   }
 
-  /* ---------- SCROLL PROGRESS ---------- */
   const progressEl = $('#scrollProgress');
   function atualizarProgress() {
     const h = document.documentElement.scrollHeight - window.innerHeight;
@@ -2917,7 +2933,6 @@ body::after {
   window.addEventListener('scroll', atualizarProgress, { passive: true });
   atualizarProgress();
 
-  /* ---------- PARALLAX DO HERO ---------- */
   const heroImg = $('#heroImage');
   let ticking = false;
   window.addEventListener('scroll', () => {
@@ -2932,7 +2947,6 @@ body::after {
     });
   }, { passive: true });
 
-  /* ---------- HERO: stagger nas palavras ---------- */
   const heroTitle = $('#heroTitle');
   if (heroTitle) {
     const palavras = heroTitle.textContent.trim().split(' ');
@@ -2942,7 +2956,6 @@ body::after {
     }).join(' ');
   }
 
-  /* ---------- MAGNETIC BUTTONS ---------- */
   const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
   if (!isTouch) {
     $$('[data-magnetic]').forEach((el) => {
@@ -2962,7 +2975,6 @@ body::after {
     });
   }
 
-  /* ---------- TOASTS ---------- */
   const toastStack = $('#toastStack');
   function toast(msg, tipo = '', dur = 3200) {
     if (!toastStack) return;
@@ -2976,7 +2988,6 @@ body::after {
     }, dur);
   }
 
-  /* ---------- NEWSLETTER ---------- */
   const newsletterForm = $('#newsletterForm');
   newsletterForm?.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -2993,7 +3004,6 @@ body::after {
     toast('Bem-vinda à lista Lume Bijoux!', 'success');
   });
 
-  /* ---------- SKELETON EM IMAGENS ---------- */
   $$('img[loading="lazy"]').forEach((img) => {
     if (!img.complete) {
       img.style.opacity = '0';
@@ -3003,7 +3013,6 @@ body::after {
     }
   });
 
-  /* ---------- INIT ---------- */
   renderCart();
   atualizarBadge();
   alternarEndereco();
@@ -3017,7 +3026,7 @@ body::after {
   }, { passive: true });
 
   console.log('%cLume Bijoux 💛', 'color:#C9A227;font-size:18px;font-weight:bold;');
-  console.log('%cBrilho de bairro, cuidado de joia.', 'color:#B76E79;font-style:italic;');
+  console.log('%cDesenvolvido por Leone DiCamp', 'color:#B76E79;font-style:italic;');
 })();
 </script>
 </body>
