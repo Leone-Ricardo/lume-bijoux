@@ -49,7 +49,6 @@
    LUME BIJOUX — Design System PREMIUM
    ========================================================= */
 :root {
-  /* Paleta com profundidade tonal */
   --cor-fundo: #FAF6F1;
   --cor-fundo-alt: #F4ECE4;
   --cor-fundo-deep: #EDE3D9;
@@ -70,24 +69,20 @@
   --cor-sucesso: #3D7A54;
   --cor-erro: #9C3B38;
 
-  /* Gradiente dourado tri-stop (o segredo do luxo) */
   --gradiente-dourado: linear-gradient(135deg, #E8C97A 0%, #C9A227 50%, #8B6914 100%);
   --gradiente-dourado-suave: linear-gradient(135deg, #F2DCA0 0%, #E0BC4F 100%);
 
-  /* Tipografia editorial */
   --fonte-titulo: 'Fraunces', 'Playfair Display', Georgia, serif;
   --fonte-texto: 'Inter', system-ui, -apple-system, sans-serif;
   --fonte-mono: 'JetBrains Mono', ui-monospace, monospace;
   --fonte-assinatura: 'Mrs Saint Delafield', cursive;
 
-  /* Layout */
   --container: 1240px;
   --pad-x: 1.5rem;
   --gap: 1.5rem;
   --section-y: clamp(4rem, 10vw, 8rem);
   --header-h: 72px;
 
-  /* Sombras em 2 camadas */
   --sombra-sutil: 0 1px 2px rgba(28,24,22,0.04), 0 4px 12px rgba(28,24,22,0.05);
   --sombra-media: 0 2px 6px rgba(28,24,22,0.05), 0 12px 32px rgba(28,24,22,0.08);
   --sombra-forte: 0 4px 12px rgba(28,24,22,0.06), 0 24px 60px rgba(28,24,22,0.12);
@@ -98,7 +93,6 @@
   --transicao: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 
   --z-header: 100;
-  --z-cursor: 150;
   --z-drawer: 200;
   --z-modal: 300;
   --z-toast: 400;
@@ -121,23 +115,14 @@ body {
   background-color: var(--cor-fundo);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
-  cursor: none;
 }
 body.is-locked { overflow: hidden; }
-
-/* Cursor nativo volta em touch */
-@media (hover: none), (pointer: coarse) {
-  body { cursor: auto; }
-}
 
 img, picture, svg, iframe { display: block; max-width: 100%; }
 img { height: auto; }
 a { color: inherit; text-decoration: none; }
 button, input, textarea, select { font: inherit; color: inherit; }
-button { background: none; border: 0; cursor: none; }
-@media (hover: none), (pointer: coarse) {
-  button, a { cursor: pointer; }
-}
+button { background: none; border: 0; cursor: pointer; }
 ul, ol { list-style: none; }
 
 h1, h2, h3, h4 {
@@ -171,48 +156,6 @@ body::after {
   opacity: 0.035;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
   mix-blend-mode: multiply;
-}
-
-/* =========================================================
-   CURSOR PERSONALIZADO
-   ========================================================= */
-.cursor {
-  position: fixed;
-  top: 0; left: 0;
-  pointer-events: none;
-  z-index: var(--z-cursor);
-  will-change: transform;
-  mix-blend-mode: difference;
-}
-.cursor__dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--cor-dourado-claro);
-  transform: translate(-50%, -50%);
-  transition: width 0.25s, height 0.25s, background 0.25s;
-}
-.cursor__ring {
-  position: fixed;
-  top: 0; left: 0;
-  width: 34px; height: 34px;
-  border: 1.5px solid var(--cor-dourado-medio);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: var(--z-cursor);
-  transform: translate(-50%, -50%);
-  transition: width 0.3s, height 0.3s, border-color 0.3s, opacity 0.3s;
-  opacity: 0.6;
-}
-.cursor--hover .cursor__dot { width: 0; height: 0; }
-.cursor--hover .cursor__ring {
-  width: 64px; height: 64px;
-  border-color: var(--cor-dourado-claro);
-  opacity: 0.9;
-  background: rgba(201, 162, 39, 0.08);
-  backdrop-filter: blur(2px);
-}
-@media (hover: none), (pointer: coarse) {
-  .cursor, .cursor__ring { display: none; }
 }
 
 /* =========================================================
@@ -260,7 +203,6 @@ body::after {
 .section__subtitle { color: var(--cor-texto-suave); font-weight: 300; max-width: 42rem; font-size: 1.0625rem; }
 .section__cta { margin-top: clamp(2.5rem, 5vw, 4rem); text-align: center; }
 
-/* Ornamento dourado (linha com ponto) */
 .ornament {
   display: flex;
   align-items: center;
@@ -286,7 +228,6 @@ body::after {
   box-shadow: 0 0 8px rgba(201, 162, 39, 0.6);
 }
 
-/* Link com Seta via CSS */
 .link-arrow {
   display: inline-flex;
   align-items: center;
@@ -299,12 +240,7 @@ body::after {
   padding-bottom: 2px;
   transition: var(--transicao);
 }
-.link-arrow::after {
-  content: '→';
-  transition: var(--transicao);
-}
 .link-arrow:hover, .link-arrow:focus-visible { color: var(--cor-dourado-escuro); border-bottom-color: var(--cor-dourado-medio); gap: 0.7rem; }
-.link-arrow:hover::after, .link-arrow:focus-visible::after { transform: translateX(4px); }
 
 /* =========================================================
    BOTÕES PREMIUM
@@ -321,16 +257,14 @@ body::after {
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+  line-height: 1;
   border: 1px solid transparent;
   border-radius: var(--radius-btn);
-  cursor: none;
+  cursor: pointer;
   transition: var(--transicao);
-  /* Correção: permite quebra de texto para evitar cortes de layout (mal encaixado) */
-  white-space: normal; 
-  text-align: center;
-  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
 }
-@media (hover: none), (pointer: coarse) { .btn { cursor: pointer; } }
 
 .btn--primary {
   background: var(--gradiente-dourado);
@@ -371,12 +305,11 @@ body::after {
 .btn--dark { background: var(--cor-preto); color: var(--cor-branco); }
 .btn--dark:hover, .btn--dark:focus-visible { background: #000; box-shadow: var(--sombra-forte); }
 
-.btn--sm { padding: 0.7rem 1rem; font-size: 0.6875rem; letter-spacing: 0.14em; }
+.btn--sm { padding: 0.7rem 1.35rem; font-size: 0.6875rem; letter-spacing: 0.14em; }
 .btn--lg { padding: 1.15rem 2.5rem; font-size: 0.8125rem; }
 .btn--full { width: 100%; }
 .btn[disabled] { opacity: 0.5; pointer-events: none; }
 
-/* Ícone-botão */
 .icon-btn {
   position: relative;
   display: inline-flex;
@@ -387,6 +320,7 @@ body::after {
   border-radius: 50%;
   color: var(--cor-texto);
   transition: var(--transicao);
+  cursor: pointer;
 }
 .icon-btn:hover, .icon-btn:focus-visible { background: rgba(201, 162, 39, 0.12); color: var(--cor-dourado-escuro); }
 
@@ -406,6 +340,7 @@ body::after {
   border-radius: var(--radius-btn);
   box-shadow: 0 2px 6px rgba(201,162,39,0.4);
   transition: var(--transicao);
+  pointer-events: none;
 }
 .icon-btn--cart .cart-badge.is-empty { opacity: 0; transform: scale(0.5); }
 .icon-btn--cart .cart-badge.is-bump { animation: badge-bump 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
@@ -421,7 +356,6 @@ body::after {
 .grid--testimonials { grid-template-columns: 1fr; }
 .grid--insta { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
 
-/* Reveal premium com máscara */
 .reveal {
   opacity: 0;
   transform: translateY(28px);
@@ -430,7 +364,6 @@ body::after {
 }
 .reveal.is-visible { opacity: 1; transform: none; }
 
-/* Skeleton shimmer */
 .skeleton {
   position: relative;
   overflow: hidden;
@@ -511,6 +444,8 @@ body::after {
 .header:not(.is-scrolled) .icon-btn { color: var(--cor-branco); }
 .header:not(.is-scrolled) .icon-btn:hover { background: rgba(255, 255, 255, 0.14); }
 .header__whats { display: none; }
+.header__sound { display: none; }
+@media (min-width: 640px) { .header__sound { display: inline-flex; } }
 
 .hamburger {
   display: flex;
@@ -521,13 +456,13 @@ body::after {
   padding: 0.7rem;
   border-radius: 50%;
   transition: var(--transicao);
+  cursor: pointer;
 }
 .hamburger span { display: block; height: 1.5px; width: 100%; background: currentColor; border-radius: 2px; transition: var(--transicao); }
 .header:not(.is-scrolled) .hamburger { color: var(--cor-branco); }
 .header.is-scrolled .hamburger { color: var(--cor-texto); }
 .hamburger:hover { background: rgba(201, 162, 39, 0.12); }
 
-/* Busca */
 .search-overlay {
   position: absolute;
   inset: 100% 0 auto 0;
@@ -561,7 +496,7 @@ body::after {
 .search-result img { width: 56px; height: 70px; object-fit: cover; border-radius: 6px; flex-shrink: 0; }
 .search-result__name { font-family: var(--fonte-titulo); font-size: 1.0625rem; font-weight: 500; }
 .search-result__price { font-family: var(--fonte-mono); font-size: 0.8125rem; color: var(--cor-dourado-escuro); font-weight: 500; }
-.search-result__add { margin-left: auto; font-size: 0.6875rem; font-weight: 500; padding: 0.55rem 1.1rem; border: 1px solid var(--cor-borda); border-radius: var(--radius-btn); letter-spacing: 0.1em; text-transform: uppercase; transition: var(--transicao); }
+.search-result__add { margin-left: auto; font-size: 0.6875rem; font-weight: 500; padding: 0.55rem 1.1rem; border: 1px solid var(--cor-borda); border-radius: var(--radius-btn); letter-spacing: 0.1em; text-transform: uppercase; transition: var(--transicao); cursor: pointer; }
 .search-result__add:hover { background: var(--gradiente-dourado); border-color: transparent; }
 
 /* =========================================================
@@ -587,7 +522,6 @@ body::after {
 @keyframes slide-in-right { from { transform: translateX(100%); } to { transform: none; } }
 @keyframes slide-in-left { from { transform: translateX(-100%); } to { transform: none; } }
 
-/* Bottom sheet em mobile */
 @media (max-width: 767px) {
   .drawer--right .drawer__panel {
     top: auto;
@@ -641,7 +575,7 @@ body::after {
 .cart-item__price { font-family: var(--fonte-mono); font-size: 0.75rem; color: var(--cor-texto-suave); margin-bottom: 0.75rem; }
 .cart-item__total { font-family: var(--fonte-titulo); font-size: 1.25rem; font-weight: 500; white-space: nowrap; font-variant-numeric: tabular-nums; }
 .cart-item__controls { display: flex; align-items: center; gap: 0.9rem; }
-.cart-item__remove { font-size: 0.75rem; color: var(--cor-texto-fraco); text-decoration: underline; text-underline-offset: 3px; transition: var(--transicao); }
+.cart-item__remove { font-size: 0.75rem; color: var(--cor-texto-fraco); text-decoration: underline; text-underline-offset: 3px; transition: var(--transicao); cursor: pointer; }
 .cart-item__remove:hover { color: var(--cor-secundaria); }
 
 .cart-empty { text-align: center; padding: 3rem 0; }
@@ -650,7 +584,7 @@ body::after {
 .cart-empty__text { font-size: 0.9375rem; color: var(--cor-texto-suave); margin-bottom: 1.75rem; }
 
 .qty { display: inline-flex; align-items: center; border: 1px solid var(--cor-borda); border-radius: var(--radius-btn); overflow: hidden; background: var(--cor-branco); }
-.qty__btn { width: 32px; height: 32px; display: grid; place-items: center; font-size: 1rem; line-height: 1; color: var(--cor-texto-suave); transition: var(--transicao); }
+.qty__btn { width: 32px; height: 32px; display: grid; place-items: center; font-size: 1rem; line-height: 1; color: var(--cor-texto-suave); transition: var(--transicao); cursor: pointer; }
 .qty__btn:hover { background: var(--cor-destaque); color: var(--cor-preto); }
 .qty__value { min-width: 28px; text-align: center; font-family: var(--fonte-mono); font-size: 0.8125rem; font-weight: 500; font-variant-numeric: tabular-nums; }
 .qty--lg .qty__btn { width: 42px; height: 42px; font-size: 1.125rem; }
@@ -683,7 +617,6 @@ body::after {
 .modal__footer { display: flex; gap: 0.75rem; justify-content: flex-end; padding: 1.25rem var(--pad-x) calc(1.5rem + env(safe-area-inset-bottom)); border-top: 1px solid var(--cor-borda-suave); background: var(--cor-fundo); }
 .modal__footer .btn { flex: 1; }
 
-/* Checkout */
 .checkout__block { border: 0; padding: 0 0 2rem; margin-bottom: 2rem; border-bottom: 1px solid var(--cor-borda-suave); }
 .checkout__block:last-of-type { border-bottom: 0; }
 .checkout__legend { display: flex; align-items: center; gap: 0.75rem; font-family: var(--fonte-titulo); font-size: 1.375rem; font-weight: 500; margin-bottom: 1.25rem; padding: 0; font-style: italic; }
@@ -720,7 +653,7 @@ body::after {
 .field__error { font-size: 0.75rem; color: var(--cor-erro); min-height: 0; font-style: italic; }
 
 .check { display: flex; align-items: flex-start; gap: 0.7rem; margin-top: 1.25rem; font-size: 0.875rem; color: var(--cor-texto-suave); cursor: pointer; }
-.check input { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--cor-dourado-medio); flex-shrink: 0; }
+.check input { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--cor-dourado-medio); flex-shrink: 0; cursor: pointer; }
 
 .options { display: grid; gap: 0.75rem; }
 .options--inline { grid-template-columns: 1fr; }
@@ -763,7 +696,6 @@ body::after {
 
 .checkout__legal { margin-top: 1.5rem; font-size: 0.8125rem; color: var(--cor-texto-suave); text-align: center; line-height: 1.7; font-style: italic; }
 
-/* Quick view */
 .quickview { display: grid; gap: 2rem; }
 .quickview__media { border-radius: 1rem; overflow: hidden; }
 .quickview__media img { width: 100%; aspect-ratio: 4/5; object-fit: cover; }
@@ -776,7 +708,6 @@ body::after {
 .quickview__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.85rem; }
 .quickview__actions .btn { flex: 1; min-width: 200px; }
 
-/* Toasts */
 .toast-stack { position: fixed; right: 1rem; bottom: calc(1rem + env(safe-area-inset-bottom)); z-index: var(--z-toast); display: grid; gap: 0.6rem; width: min(360px, calc(100vw - 2rem)); pointer-events: none; }
 .toast {
   display: flex;
@@ -924,21 +855,7 @@ body::after {
   height: 56px;
   background: linear-gradient(180deg, transparent, var(--cor-dourado-claro), transparent);
   animation: scroll-pulse 2.4s ease-in-out infinite;
-  position: relative;
 }
-/* Seta na ponta inferior da linha de scroll */
-.hero__scroll-line::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%) rotate(45deg);
-  width: 6px;
-  height: 6px;
-  border-right: 1px solid var(--cor-dourado-claro);
-  border-bottom: 1px solid var(--cor-dourado-claro);
-}
-
 @keyframes scroll-pulse {
   0%, 100% { opacity: 0.35; transform: scaleY(0.7); }
   50% { opacity: 1; transform: scaleY(1); }
@@ -1028,10 +945,6 @@ body::after {
   .stats { grid-template-columns: repeat(4, 1fr); }
   .stat + .stat::before { display: block; }
   .stat:nth-child(odd) + .stat::before { display: block; }
-  .stat:first-child + .stat::before,
-  .stat:nth-child(2) + .stat::before,
-  .stat:nth-child(3) + .stat::before,
-  .stat:nth-child(4) + .stat::before { display: block; }
 }
 
 /* =========================================================
@@ -1068,9 +981,6 @@ body::after {
 }
 .category-card__name { font-size: 1.25rem; font-weight: 500; }
 .category-card__link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
   font-family: var(--fonte-mono);
   font-size: 0.6875rem;
   font-weight: 500;
@@ -1079,14 +989,10 @@ body::after {
   color: var(--cor-dourado-escuro);
   transition: var(--transicao);
 }
-.category-card__link::after {
-  content: '→';
-  transition: var(--transicao);
-}
-.category-card:hover .category-card__link::after { transform: translateX(4px); }
+.category-card:hover .category-card__link { gap: 0.75rem; transform: translateX(4px); }
 
 /* =========================================================
-   PRODUCT CARD PREMIUM (com image swap)
+   PRODUCT CARD PREMIUM
    ========================================================= */
 .product-card {
   position: relative;
@@ -1139,7 +1045,6 @@ body::after {
   box-shadow: var(--sombra-dourada);
 }
 
-/* Selo de garantia */
 .product-card__seal {
   position: absolute;
   top: 0.85rem;
@@ -1187,6 +1092,7 @@ body::after {
   backdrop-filter: blur(8px);
   z-index: 3;
   box-shadow: var(--sombra-media);
+  cursor: pointer;
 }
 .product-card:hover .product-card__quick,
 .product-card:focus-within .product-card__quick { opacity: 1; transform: translate(-50%, 0); }
@@ -1203,8 +1109,8 @@ body::after {
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.02em;
 }
-.product-card__actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: auto; }
-.product-card__actions .btn { flex: 1; min-width: 110px; padding-inline: 0.5rem; }
+.product-card__actions { display: flex; gap: 0.5rem; margin-top: auto; }
+.product-card__actions .btn { flex: 1; padding-inline: 0.75rem; }
 
 /* =========================================================
    MATERIAIS
@@ -1431,11 +1337,8 @@ body::after {
 .insta-item__overlay {
   position: absolute;
   inset: 0;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
+  display: grid;
+  place-items: center;
   font-family: var(--fonte-mono);
   font-size: 0.6875rem;
   font-weight: 500;
@@ -1446,13 +1349,8 @@ body::after {
   opacity: 0;
   transition: var(--transicao);
 }
-.insta-item__overlay::after {
-  content: '→';
-  transition: var(--transicao);
-}
 .insta-item:hover img, .insta-item:focus-visible img { transform: scale(1.1); }
 .insta-item:hover .insta-item__overlay, .insta-item:focus-visible .insta-item__overlay { opacity: 1; }
-.insta-item:hover .insta-item__overlay::after, .insta-item:focus-visible .insta-item__overlay::after { transform: translateX(4px); }
 
 /* =========================================================
    NEWSLETTER
@@ -1620,8 +1518,7 @@ body::after {
 @media (max-width: 479px) {
   .hero__actions { flex-direction: column; }
   .hero__actions .btn { width: 100%; }
-  .product-card__actions { flex-direction: row; flex-wrap: wrap; }
-  .product-card__actions .btn { width: 100%; min-width: 100%; }
+  .product-card__actions { flex-direction: column; }
   .product-card__quick { opacity: 1; transform: translate(-50%, 0); }
   .product-card__seal { opacity: 1; transform: none; }
   .sobre__actions .btn { width: 100%; }
@@ -1639,10 +1536,6 @@ body::after {
 
 <body>
 <a class="skip-link" href="#main">Pular para o conteúdo principal</a>
-
-<!-- CURSOR PERSONALIZADO -->
-<div class="cursor" id="cursor" aria-hidden="true"><div class="cursor__dot"></div></div>
-<div class="cursor__ring" id="cursorRing" aria-hidden="true"></div>
 
 <!-- SCROLL PROGRESS -->
 <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
@@ -1663,7 +1556,9 @@ body::after {
     </nav>
 
     <div class="header__actions">
-      <!-- Botão de som foi removido daqui a pedido -->
+      <button class="icon-btn header__sound" id="soundToggle" type="button" aria-label="Ativar som" aria-pressed="false" title="Som de feedback">
+        <svg viewBox="0 0 24 24" aria-hidden="true" id="soundIcon"><path d="M11 5L6 9H3v6h3l5 4V5z"/><path d="M16 9a4 4 0 0 1 0 6"/><path d="M19 6a8 8 0 0 1 0 12"/></svg>
+      </button>
       <button class="icon-btn" id="searchToggle" type="button" aria-label="Buscar produtos" aria-expanded="false">
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
       </button>
@@ -2008,27 +1903,27 @@ body::after {
       <div class="grid grid--categories">
         <a class="category-card reveal" href="#destaques">
           <div class="category-card__media"><img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=800&q=80" alt="Colares delicados em banho de ouro sobre superfície clara" loading="lazy" width="800" height="1000"></div>
-          <div class="category-card__body"><h3 class="category-card__name">Colares</h3><span class="category-card__link">Explorar</span></div>
+          <div class="category-card__body"><h3 class="category-card__name">Colares</h3><span class="category-card__link">Explorar →</span></div>
         </a>
         <a class="category-card reveal" href="#destaques">
           <div class="category-card__media"><img src="https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=800&q=80" alt="Brincos dourados delicados em exposição" loading="lazy" width="800" height="1000"></div>
-          <div class="category-card__body"><h3 class="category-card__name">Brincos</h3><span class="category-card__link">Explorar</span></div>
+          <div class="category-card__body"><h3 class="category-card__name">Brincos</h3><span class="category-card__link">Explorar →</span></div>
         </a>
         <a class="category-card reveal" href="#destaques">
           <div class="category-card__media"><img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=800&q=80" alt="Anel com zircônia em banho de ouro" loading="lazy" width="800" height="1000"></div>
-          <div class="category-card__body"><h3 class="category-card__name">Anéis</h3><span class="category-card__link">Explorar</span></div>
+          <div class="category-card__body"><h3 class="category-card__name">Anéis</h3><span class="category-card__link">Explorar →</span></div>
         </a>
         <a class="category-card reveal" href="#destaques">
           <div class="category-card__media"><img src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=800&q=80" alt="Pulseira fina de elos dourados" loading="lazy" width="800" height="1000"></div>
-          <div class="category-card__body"><h3 class="category-card__name">Pulseiras</h3><span class="category-card__link">Explorar</span></div>
+          <div class="category-card__body"><h3 class="category-card__name">Pulseiras</h3><span class="category-card__link">Explorar →</span></div>
         </a>
         <a class="category-card reveal" href="#destaques">
           <div class="category-card__media"><img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=800&q=80" alt="Conjunto de colar e brinco combinando" loading="lazy" width="800" height="1000"></div>
-          <div class="category-card__body"><h3 class="category-card__name">Conjuntos</h3><span class="category-card__link">Explorar</span></div>
+          <div class="category-card__body"><h3 class="category-card__name">Conjuntos</h3><span class="category-card__link">Explorar →</span></div>
         </a>
         <a class="category-card reveal" href="#destaques">
           <div class="category-card__media"><img src="https://images.unsplash.com/photo-1620656798579-1984d9e87df7?auto=format&fit=crop&w=800&q=80" alt="Bijuterias infantis delicadas e coloridas" loading="lazy" width="800" height="1000"></div>
-          <div class="category-card__body"><h3 class="category-card__name">Infantil</h3><span class="category-card__link">Explorar</span></div>
+          <div class="category-card__body"><h3 class="category-card__name">Infantil</h3><span class="category-card__link">Explorar →</span></div>
         </a>
       </div>
     </div>
@@ -2043,7 +1938,7 @@ body::after {
           <p class="eyebrow">Escolhidas a dedo</p>
           <h2 class="section__title">Destaques da semana</h2>
         </div>
-        <a class="link-arrow" href="https://wa.me/5521999990000?text=Ol%C3%A1!%20Quero%20ver%20as%20novidades%20da%20semana%20na%20Lume%20Bijoux." target="_blank" rel="noopener">Ver no WhatsApp</a>
+        <a class="link-arrow" href="https://wa.me/5521999990000?text=Ol%C3%A1!%20Quero%20ver%20as%20novidades%20da%20semana%20na%20Lume%20Bijoux." target="_blank" rel="noopener">Ver no WhatsApp →</a>
       </header>
 
       <div class="grid grid--products" id="productGrid">
@@ -2206,19 +2101,19 @@ body::after {
           <span class="material-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4v16M4 12h16"/></svg></span>
           <h3 class="material-card__title">Banho de ouro 18k</h3>
           <p class="material-card__text">Camada espessa sobre latão ou aço, com verniz protetor. Aquele dourado quente que combina com tudo e não desbota fácil.</p>
-          <a class="link-arrow" href="https://wa.me/5521999990000?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20as%20pe%C3%A7as%20em%20banho%20de%20ouro%2018k." target="_blank" rel="noopener">Saiba mais</a>
+          <a class="link-arrow" href="https://wa.me/5521999990000?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20as%20pe%C3%A7as%20em%20banho%20de%20ouro%2018k." target="_blank" rel="noopener">Saiba mais →</a>
         </article>
         <article class="material-card reveal">
           <span class="material-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l7 5-7 13L5 8z"/><path d="M5 8h14"/></svg></span>
           <h3 class="material-card__title">Prata 925</h3>
           <p class="material-card__text">Prata de lei, com teor de 92,5%. Pode escurecer naturalmente — e volta a brilhar com uma flanela e a pastinha certa.</p>
-          <a class="link-arrow" href="https://wa.me/5521999990000?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20as%20pe%C3%A7as%20em%20prata%20925." target="_blank" rel="noopener">Saiba mais</a>
+          <a class="link-arrow" href="https://wa.me/5521999990000?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20as%20pe%C3%A7as%20em%20prata%20925." target="_blank" rel="noopener">Saiba mais →</a>
         </article>
         <article class="material-card reveal">
           <span class="material-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="3"/><path d="M9 12h6"/></svg></span>
           <h3 class="material-card__title">Aço inox</h3>
           <p class="material-card__text">O queridinho de quem vive na correria: não mancha, não enferruja e pode ir à praia e à academia sem drama.</p>
-          <a class="link-arrow" href="https://wa.me/5521999990000?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20as%20pe%C3%A7as%20em%20a%C3%A7o%20inox." target="_blank" rel="noopener">Saiba mais</a>
+          <a class="link-arrow" href="https://wa.me/5521999990000?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20as%20pe%C3%A7as%20em%20a%C3%A7o%20inox." target="_blank" rel="noopener">Saiba mais →</a>
         </article>
       </div>
 
@@ -2348,12 +2243,12 @@ body::after {
       </header>
 
       <div class="grid grid--insta">
-        <a class="insta-item reveal" href="https://instagram.com/lumebijoux" target="_blank" rel="noopener" aria-label="Abrir publicação no Instagram"><img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=600&h=600&q=80" alt="Colar dourado com pedra rosa" loading="lazy" width="600" height="600"><span class="insta-item__overlay" aria-hidden="true">Ver post</span></a>
-        <a class="insta-item reveal" href="https://instagram.com/lumebijoux" target="_blank" rel="noopener" aria-label="Abrir publicação no Instagram"><img src="https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=600&h=600&q=80" alt="Brincos delicados em exposição" loading="lazy" width="600" height="600"><span class="insta-item__overlay" aria-hidden="true">Ver post</span></a>
-        <a class="insta-item reveal" href="https://instagram.com/lumebijoux" target="_blank" rel="noopener" aria-label="Abrir publicação no Instagram"><img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=600&h=600&q=80" alt="Anel dourado com zircônia" loading="lazy" width="600" height="600"><span class="insta-item__overlay" aria-hidden="true">Ver post</span></a>
-        <a class="insta-item reveal" href="https://instagram.com/lumebijoux" target="_blank" rel="noopener" aria-label="Abrir publicação no Instagram"><img src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=600&h=600&q=80" alt="Pulseira dourada de elos" loading="lazy" width="600" height="600"><span class="insta-item__overlay" aria-hidden="true">Ver post</span></a>
-        <a class="insta-item reveal" href="https://instagram.com/lumebijoux" target="_blank" rel="noopener" aria-label="Abrir publicação no Instagram"><img src="https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=600&h=600&q=80" alt="Colar com pedra natural" loading="lazy" width="600" height="600"><span class="insta-item__overlay" aria-hidden="true">Ver post</span></a>
-        <a class="insta-item reveal" href="https://instagram.com/lumebijoux" target="_blank" rel="noopener" aria-label="Abrir publicação no Instagram"><img src="https://images.unsplash.com/photo-1596944924616-7b38e7cfac36?auto=format&fit=crop&w=600&h=600&q=80" alt="Brinco pequeno com ponto de luz" loading="lazy" width="600" height="600"><span class="insta-item__overlay" aria-hidden="true">Ver post</span></a>
+        <a class="insta-item reveal" href="https://instagram.com/lumebijoux" target="_blank" rel="noopener" aria-label="Abrir publicação no Instagram"><img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=600&h=600&q=80" alt="Colar dourado com pedra rosa" loading="lazy" width="600" height="600"><span class="insta-item__overlay" aria-hidden="true">Ver post →</span></a>
+        <a class="insta-item reveal" href="https://instagram.com/lumebijoux" target="_blank" rel="noopener" aria-label="Abrir publicação no Instagram"><img src="https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=600&h=600&q=80" alt="Brincos delicados em exposição" loading="lazy" width="600" height="600"><span class="insta-item__overlay" aria-hidden="true">Ver post →</span></a>
+        <a class="insta-item reveal" href="https://instagram.com/lumebijoux" target="_blank" rel="noopener" aria-label="Abrir publicação no Instagram"><img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=600&h=600&q=80" alt="Anel dourado com zircônia" loading="lazy" width="600" height="600"><span class="insta-item__overlay" aria-hidden="true">Ver post →</span></a>
+        <a class="insta-item reveal" href="https://instagram.com/lumebijoux" target="_blank" rel="noopener" aria-label="Abrir publicação no Instagram"><img src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=600&h=600&q=80" alt="Pulseira dourada de elos" loading="lazy" width="600" height="600"><span class="insta-item__overlay" aria-hidden="true">Ver post →</span></a>
+        <a class="insta-item reveal" href="https://instagram.com/lumebijoux" target="_blank" rel="noopener" aria-label="Abrir publicação no Instagram"><img src="https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=600&h=600&q=80" alt="Colar com pedra natural" loading="lazy" width="600" height="600"><span class="insta-item__overlay" aria-hidden="true">Ver post →</span></a>
+        <a class="insta-item reveal" href="https://instagram.com/lumebijoux" target="_blank" rel="noopener" aria-label="Abrir publicação no Instagram"><img src="https://images.unsplash.com/photo-1596944924616-7b38e7cfac36?auto=format&fit=crop&w=600&h=600&q=80" alt="Brinco pequeno com ponto de luz" loading="lazy" width="600" height="600"><span class="insta-item__overlay" aria-hidden="true">Ver post →</span></a>
       </div>
 
       <div class="section__cta reveal">
@@ -2437,7 +2332,7 @@ body::after {
 
 <script>
 /* =========================================================
-   LUME BIJOUX — script.js (versão premium)
+   LUME BIJOUX — script.js (versão premium, seta nativa)
    ========================================================= */
 (function () {
   'use strict';
@@ -2456,6 +2351,7 @@ body::after {
   };
   const DESCONTO_PIX = 0.05;
   const STORAGE_KEY = 'lume_cart_v1';
+  const SOUND_KEY = 'lume_sound_v1';
 
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => Array.from(c.querySelectorAll(s));
@@ -2466,6 +2362,75 @@ body::after {
     const w = window.open(url, '_blank', 'noopener');
     if (!w) window.location.href = url;
   }
+
+  /* ---------- SOM (Web Audio API) ---------- */
+  let somAtivo = localStorage.getItem(SOUND_KEY) === 'true';
+  let audioCtx = null;
+
+  function playClink() {
+    if (!somAtivo) return;
+    try {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const now = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(1400, now);
+      osc.frequency.exponentialRampToValueAtTime(1800, now + 0.08);
+      gain.gain.setValueAtTime(0.06, now);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.22);
+      osc.connect(gain).connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + 0.25);
+
+      const osc2 = audioCtx.createOscillator();
+      const gain2 = audioCtx.createGain();
+      osc2.type = 'sine';
+      osc2.frequency.setValueAtTime(2600, now);
+      gain2.gain.setValueAtTime(0.025, now);
+      gain2.gain.exponentialRampToValueAtTime(0.0001, now + 0.18);
+      osc2.connect(gain2).connect(audioCtx.destination);
+      osc2.start(now);
+      osc2.stop(now + 0.2);
+    } catch (e) {}
+  }
+
+  function playTick() {
+    if (!somAtivo) return;
+    try {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const now = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(800, now);
+      gain.gain.setValueAtTime(0.03, now);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.08);
+      osc.connect(gain).connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + 0.1);
+    } catch (e) {}
+  }
+
+  const soundToggle = $('#soundToggle');
+  function atualizarIconeSom() {
+    if (!soundToggle) return;
+    soundToggle.setAttribute('aria-pressed', String(somAtivo));
+    soundToggle.setAttribute('aria-label', somAtivo ? 'Desativar som' : 'Ativar som');
+    const icon = $('#soundIcon');
+    if (icon) {
+      icon.innerHTML = somAtivo
+        ? '<path d="M11 5L6 9H3v6h3l5 4V5z"/><path d="M16 9a4 4 0 0 1 0 6"/><path d="M19 6a8 8 0 0 1 0 12"/>'
+        : '<path d="M11 5L6 9H3v6h3l5 4V5z"/><path d="M22 9l-6 6"/><path d="M16 9l6 6"/>';
+    }
+  }
+  soundToggle?.addEventListener('click', () => {
+    somAtivo = !somAtivo;
+    localStorage.setItem(SOUND_KEY, String(somAtivo));
+    atualizarIconeSom();
+    if (somAtivo) playClink();
+  });
+  atualizarIconeSom();
 
   /* ---------- HAPTIC ---------- */
   function haptic(pattern = 8) {
@@ -2491,7 +2456,7 @@ body::after {
     if (ex) ex.qty = Math.min(ex.qty + qtd, 99);
     else cart.push({ ...produto, qty: Math.min(qtd, 99) });
     salvarCart(); renderCart(); atualizarBadge(true);
-    haptic(12);
+    playClink(); haptic(12);
     toast(`${produto.name} foi para a sacola`, 'success');
   }
 
@@ -2501,6 +2466,7 @@ body::after {
     item.qty += delta;
     if (item.qty <= 0) cart = cart.filter((i) => i.id !== id);
     salvarCart(); renderCart(); atualizarBadge();
+    playTick();
   }
 
   function removeItem(id) {
@@ -2836,9 +2802,9 @@ body::after {
 
   function renderBusca(termo) {
     const t = normalizar(termo.trim());
-    if (!t) { searchResults.innerHTML = `<p class="search-results__empty">Busque por “colar”, “argola”, “prata 925”, “presente”…</p>`; return; }
+    if (!t) { searchResults.innerHTML = `<p class="search-results__empty">Busque por "colar", "argola", "prata 925", "presente"…</p>`; return; }
     const res = listarProdutos().filter((p) => normalizar(`${p.name} ${p.desc} ${p.id}`).includes(t));
-    if (!res.length) { searchResults.innerHTML = `<p class="search-results__empty">Não encontramos “${escapeHTML(termo)}”. Chama no WhatsApp que a gente procura pra você.</p>`; return; }
+    if (!res.length) { searchResults.innerHTML = `<p class="search-results__empty">Não encontramos "${escapeHTML(termo)}". Chama no WhatsApp que a gente procura pra você.</p>`; return; }
     searchResults.innerHTML = res.map((p) => `
       <div class="search-result" data-id="${escapeHTML(p.id)}">
         <img src="${escapeHTML(p.image)}" alt="${escapeHTML(p.name)}" loading="lazy" width="56" height="70">
@@ -2976,53 +2942,8 @@ body::after {
     }).join(' ');
   }
 
-  /* ---------- CURSOR PERSONALIZADO ---------- */
-  const cursor = $('#cursor');
-  const cursorRing = $('#cursorRing');
-  const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
-  if (!isTouch && cursor && cursorRing) {
-    let mx = window.innerWidth / 2, my = window.innerHeight / 2;
-    let dx = mx, dy = my, rx = mx, ry = my;
-    let active = false;
-
-    document.addEventListener('mousemove', (e) => {
-      mx = e.clientX; my = e.clientY;
-      if (!active) {
-        active = true;
-        cursor.style.opacity = '1';
-        cursorRing.style.opacity = '0.6';
-      }
-    });
-    document.addEventListener('mouseleave', () => { cursor.style.opacity = '0'; cursorRing.style.opacity = '0'; });
-
-    function animate() {
-      dx += (mx - dx) * 0.35;
-      dy += (my - dy) * 0.35;
-      rx += (mx - rx) * 0.12;
-      ry += (my - ry) * 0.12;
-      cursor.style.transform = `translate3d(${dx}px, ${dy}px, 0)`;
-      cursorRing.style.transform = `translate3d(${rx - 17}px, ${ry - 17}px, 0)`;
-      requestAnimationFrame(animate);
-    }
-    requestAnimationFrame(animate);
-
-    // Hover em elementos interativos
-    const hoverables = 'a, button, [data-magnetic], .product-card, .category-card, input, textarea, .insta-item';
-    document.addEventListener('mouseover', (e) => {
-      if (e.target.closest(hoverables)) {
-        cursor.classList.add('cursor--hover');
-        cursorRing.classList.add('cursor--hover');
-      }
-    });
-    document.addEventListener('mouseout', (e) => {
-      if (e.target.closest(hoverables)) {
-        cursor.classList.remove('cursor--hover');
-        cursorRing.classList.remove('cursor--hover');
-      }
-    });
-  }
-
   /* ---------- MAGNETIC BUTTONS ---------- */
+  const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
   if (!isTouch) {
     $$('[data-magnetic]').forEach((el) => {
       let rect = null;
@@ -3068,6 +2989,7 @@ body::after {
     }
     fb.textContent = 'Prontinho! Você entrou na lista.';
     input.value = '';
+    playClink();
     toast('Bem-vinda à lista Lume Bijoux!', 'success');
   });
 
