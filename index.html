@@ -436,8 +436,6 @@ body::after {
 .header:not(.is-scrolled) .icon-btn { color: var(--cor-branco); }
 .header:not(.is-scrolled) .icon-btn:hover { background: rgba(255, 255, 255, 0.14); }
 .header__whats { display: none; }
-.header__sound { display: none; }
-@media (min-width: 640px) { .header__sound { display: inline-flex; } }
 
 .hamburger {
   display: flex;
@@ -1104,7 +1102,6 @@ body::after {
 }
 .product-card__actions { display: flex; gap: 0.5rem; margin-top: auto; }
 
-/* ✅ CORRIGIDO: botões dos cards com quebra de linha centralizada */
 .product-card__actions .btn {
   flex: 1;
   padding: 0.7rem 0.6rem;
@@ -1447,7 +1444,6 @@ body::after {
   border-radius: var(--radius-btn);
 }
 
-/* ✅ Footer bottom com crédito centralizado */
 .footer__bottom {
   display: flex;
   flex-wrap: wrap;
@@ -1591,9 +1587,6 @@ body::after {
     </nav>
 
     <div class="header__actions">
-      <button class="icon-btn header__sound" id="soundToggle" type="button" aria-label="Ativar som" aria-pressed="false" title="Som de feedback">
-        <svg viewBox="0 0 24 24" aria-hidden="true" id="soundIcon"><path d="M11 5L6 9H3v6h3l5 4V5z"/><path d="M16 9a4 4 0 0 1 0 6"/><path d="M19 6a8 8 0 0 1 0 12"/></svg>
-      </button>
       <button class="icon-btn" id="searchToggle" type="button" aria-label="Buscar produtos" aria-expanded="false">
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
       </button>
@@ -2368,7 +2361,7 @@ body::after {
 
 <script>
 /* =========================================================
-   LUME BIJOUX — script.js (versão premium, seta nativa)
+   LUME BIJOUX — script.js (sem áudio, performance otimizada)
    ========================================================= */
 (function () {
   'use strict';
@@ -2386,7 +2379,6 @@ body::after {
   };
   const DESCONTO_PIX = 0.05;
   const STORAGE_KEY = 'lume_cart_v1';
-  const SOUND_KEY = 'lume_sound_v1';
 
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => Array.from(c.querySelectorAll(s));
@@ -2398,74 +2390,9 @@ body::after {
     if (!w) window.location.href = url;
   }
 
-  /* SOM */
-  let somAtivo = localStorage.getItem(SOUND_KEY) === 'true';
-  let audioCtx = null;
-
-  function playClink() {
-    if (!somAtivo) return;
-    try {
-      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      const now = audioCtx.currentTime;
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(1400, now);
-      osc.frequency.exponentialRampToValueAtTime(1800, now + 0.08);
-      gain.gain.setValueAtTime(0.06, now);
-      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.22);
-      osc.connect(gain).connect(audioCtx.destination);
-      osc.start(now); osc.stop(now + 0.25);
-      const osc2 = audioCtx.createOscillator();
-      const gain2 = audioCtx.createGain();
-      osc2.type = 'sine';
-      osc2.frequency.setValueAtTime(2600, now);
-      gain2.gain.setValueAtTime(0.025, now);
-      gain2.gain.exponentialRampToValueAtTime(0.0001, now + 0.18);
-      osc2.connect(gain2).connect(audioCtx.destination);
-      osc2.start(now); osc2.stop(now + 0.2);
-    } catch (e) {}
-  }
-
-  function playTick() {
-    if (!somAtivo) return;
-    try {
-      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      const now = audioCtx.currentTime;
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(800, now);
-      gain.gain.setValueAtTime(0.03, now);
-      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.08);
-      osc.connect(gain).connect(audioCtx.destination);
-      osc.start(now); osc.stop(now + 0.1);
-    } catch (e) {}
-  }
-
-  const soundToggle = $('#soundToggle');
-  function atualizarIconeSom() {
-    if (!soundToggle) return;
-    soundToggle.setAttribute('aria-pressed', String(somAtivo));
-    soundToggle.setAttribute('aria-label', somAtivo ? 'Desativar som' : 'Ativar som');
-    const icon = $('#soundIcon');
-    if (icon) {
-      icon.innerHTML = somAtivo
-        ? '<path d="M11 5L6 9H3v6h3l5 4V5z"/><path d="M16 9a4 4 0 0 1 0 6"/><path d="M19 6a8 8 0 0 1 0 12"/>'
-        : '<path d="M11 5L6 9H3v6h3l5 4V5z"/><path d="M22 9l-6 6"/><path d="M16 9l6 6"/>';
-    }
-  }
-  soundToggle?.addEventListener('click', () => {
-    somAtivo = !somAtivo;
-    localStorage.setItem(SOUND_KEY, String(somAtivo));
-    atualizarIconeSom();
-    if (somAtivo) playClink();
-  });
-  atualizarIconeSom();
-
   function haptic(p = 8) { if ('vibrate' in navigator) try { navigator.vibrate(p); } catch (e) {} }
 
-  /* CARRINHO */
+  /* ---------- CARRINHO ---------- */
   let cart = carregarCart();
   function carregarCart() {
     try {
@@ -2484,7 +2411,7 @@ body::after {
     if (ex) ex.qty = Math.min(ex.qty + qtd, 99);
     else cart.push({ ...produto, qty: Math.min(qtd, 99) });
     salvarCart(); renderCart(); atualizarBadge(true);
-    playClink(); haptic(12);
+    haptic(12);
     toast(`${produto.name} foi para a sacola`, 'success');
   }
   function updateQty(id, delta) {
@@ -2493,7 +2420,6 @@ body::after {
     item.qty += delta;
     if (item.qty <= 0) cart = cart.filter((i) => i.id !== id);
     salvarCart(); renderCart(); atualizarBadge();
-    playTick();
   }
   function removeItem(id) {
     const it = cart.find((i) => i.id === id);
@@ -2587,6 +2513,7 @@ body::after {
     if (e.target.closest('[data-remove]')) removeItem(id);
   });
 
+  /* ---------- CHECKOUT ---------- */
   const checkoutModal = $('#checkoutModal');
   const checkoutForm = $('#checkoutForm');
   const addressBlock = $('#addressBlock');
@@ -2740,6 +2667,7 @@ body::after {
     toast('Pedido enviado! Te esperamos no WhatsApp.', 'success', 5000);
   });
 
+  /* ---------- HEADER / DRAWERS / MODAIS ---------- */
   const header = $('#header');
   const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 40);
   window.addEventListener('scroll', onScroll, { passive: true });
@@ -2814,6 +2742,7 @@ body::after {
     });
   });
 
+  /* ---------- BUSCA ---------- */
   const searchOverlay = $('#searchOverlay');
   const searchInput = $('#searchInput');
   const searchResults = $('#searchResults');
@@ -2844,6 +2773,7 @@ body::after {
     if (p) { addToCart(p, 1); fecharBusca(); }
   });
 
+  /* ---------- QUICK VIEW ---------- */
   const quickViewModal = $('#quickView');
   let qvProduto = null, qvQtd = 1;
   function abrirQuickView(p) {
@@ -2868,6 +2798,7 @@ body::after {
     fecharModal(quickViewModal);
   });
 
+  /* ---------- AÇÕES DE PRODUTO ---------- */
   const productGrid = $('#productGrid');
   productGrid?.addEventListener('click', (e) => {
     const c = e.target.closest('.product-card'); if (!c) return;
@@ -2886,6 +2817,7 @@ body::after {
     l.href = `https://wa.me/${LOJA.whatsapp}?text=${encodeURIComponent(txt)}`;
   });
 
+  /* ---------- SCROLL REVEAL ---------- */
   const revealEls = $$('.reveal');
   if ('IntersectionObserver' in window && revealEls.length) {
     const io = new IntersectionObserver((ents) => {
@@ -2899,6 +2831,7 @@ body::after {
     revealEls.forEach((el) => el.classList.add('is-visible'));
   }
 
+  /* ---------- CONTADORES ANIMADOS (STATS) ---------- */
   const statNums = $$('.stat__number[data-count]');
   if (statNums.length && 'IntersectionObserver' in window) {
     const ioStats = new IntersectionObserver((ents) => {
@@ -2924,6 +2857,7 @@ body::after {
     statNums.forEach((el) => ioStats.observe(el));
   }
 
+  /* ---------- SCROLL PROGRESS ---------- */
   const progressEl = $('#scrollProgress');
   function atualizarProgress() {
     const h = document.documentElement.scrollHeight - window.innerHeight;
@@ -2933,6 +2867,7 @@ body::after {
   window.addEventListener('scroll', atualizarProgress, { passive: true });
   atualizarProgress();
 
+  /* ---------- PARALLAX DO HERO ---------- */
   const heroImg = $('#heroImage');
   let ticking = false;
   window.addEventListener('scroll', () => {
@@ -2947,6 +2882,7 @@ body::after {
     });
   }, { passive: true });
 
+  /* ---------- HERO: stagger nas palavras ---------- */
   const heroTitle = $('#heroTitle');
   if (heroTitle) {
     const palavras = heroTitle.textContent.trim().split(' ');
@@ -2956,6 +2892,7 @@ body::after {
     }).join(' ');
   }
 
+  /* ---------- MAGNETIC BUTTONS ---------- */
   const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
   if (!isTouch) {
     $$('[data-magnetic]').forEach((el) => {
@@ -2975,6 +2912,7 @@ body::after {
     });
   }
 
+  /* ---------- TOASTS ---------- */
   const toastStack = $('#toastStack');
   function toast(msg, tipo = '', dur = 3200) {
     if (!toastStack) return;
@@ -2988,6 +2926,7 @@ body::after {
     }, dur);
   }
 
+  /* ---------- NEWSLETTER ---------- */
   const newsletterForm = $('#newsletterForm');
   newsletterForm?.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -3000,10 +2939,10 @@ body::after {
     }
     fb.textContent = 'Prontinho! Você entrou na lista.';
     input.value = '';
-    playClink();
     toast('Bem-vinda à lista Lume Bijoux!', 'success');
   });
 
+  /* ---------- SKELETON EM IMAGENS ---------- */
   $$('img[loading="lazy"]').forEach((img) => {
     if (!img.complete) {
       img.style.opacity = '0';
@@ -3013,6 +2952,7 @@ body::after {
     }
   });
 
+  /* ---------- INIT ---------- */
   renderCart();
   atualizarBadge();
   alternarEndereco();
