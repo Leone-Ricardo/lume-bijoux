@@ -286,6 +286,7 @@ body::after {
   box-shadow: 0 0 8px rgba(201, 162, 39, 0.6);
 }
 
+/* Link com Seta via CSS */
 .link-arrow {
   display: inline-flex;
   align-items: center;
@@ -298,7 +299,12 @@ body::after {
   padding-bottom: 2px;
   transition: var(--transicao);
 }
+.link-arrow::after {
+  content: '→';
+  transition: var(--transicao);
+}
 .link-arrow:hover, .link-arrow:focus-visible { color: var(--cor-dourado-escuro); border-bottom-color: var(--cor-dourado-medio); gap: 0.7rem; }
+.link-arrow:hover::after, .link-arrow:focus-visible::after { transform: translateX(4px); }
 
 /* =========================================================
    BOTÕES PREMIUM
@@ -315,13 +321,14 @@ body::after {
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  line-height: 1;
   border: 1px solid transparent;
   border-radius: var(--radius-btn);
   cursor: none;
   transition: var(--transicao);
-  white-space: nowrap;
-  overflow: hidden;
+  /* Correção: permite quebra de texto para evitar cortes de layout (mal encaixado) */
+  white-space: normal; 
+  text-align: center;
+  line-height: 1.2;
 }
 @media (hover: none), (pointer: coarse) { .btn { cursor: pointer; } }
 
@@ -364,7 +371,7 @@ body::after {
 .btn--dark { background: var(--cor-preto); color: var(--cor-branco); }
 .btn--dark:hover, .btn--dark:focus-visible { background: #000; box-shadow: var(--sombra-forte); }
 
-.btn--sm { padding: 0.7rem 1.35rem; font-size: 0.6875rem; letter-spacing: 0.14em; }
+.btn--sm { padding: 0.7rem 1rem; font-size: 0.6875rem; letter-spacing: 0.14em; }
 .btn--lg { padding: 1.15rem 2.5rem; font-size: 0.8125rem; }
 .btn--full { width: 100%; }
 .btn[disabled] { opacity: 0.5; pointer-events: none; }
@@ -504,8 +511,6 @@ body::after {
 .header:not(.is-scrolled) .icon-btn { color: var(--cor-branco); }
 .header:not(.is-scrolled) .icon-btn:hover { background: rgba(255, 255, 255, 0.14); }
 .header__whats { display: none; }
-.header__sound { display: none; }
-@media (min-width: 640px) { .header__sound { display: inline-flex; } }
 
 .hamburger {
   display: flex;
@@ -919,7 +924,21 @@ body::after {
   height: 56px;
   background: linear-gradient(180deg, transparent, var(--cor-dourado-claro), transparent);
   animation: scroll-pulse 2.4s ease-in-out infinite;
+  position: relative;
 }
+/* Seta na ponta inferior da linha de scroll */
+.hero__scroll-line::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 6px;
+  height: 6px;
+  border-right: 1px solid var(--cor-dourado-claro);
+  border-bottom: 1px solid var(--cor-dourado-claro);
+}
+
 @keyframes scroll-pulse {
   0%, 100% { opacity: 0.35; transform: scaleY(0.7); }
   50% { opacity: 1; transform: scaleY(1); }
@@ -1049,6 +1068,9 @@ body::after {
 }
 .category-card__name { font-size: 1.25rem; font-weight: 500; }
 .category-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   font-family: var(--fonte-mono);
   font-size: 0.6875rem;
   font-weight: 500;
@@ -1057,7 +1079,11 @@ body::after {
   color: var(--cor-dourado-escuro);
   transition: var(--transicao);
 }
-.category-card:hover .category-card__link { gap: 0.75rem; transform: translateX(4px); }
+.category-card__link::after {
+  content: '→';
+  transition: var(--transicao);
+}
+.category-card:hover .category-card__link::after { transform: translateX(4px); }
 
 /* =========================================================
    PRODUCT CARD PREMIUM (com image swap)
@@ -1177,8 +1203,8 @@ body::after {
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.02em;
 }
-.product-card__actions { display: flex; gap: 0.5rem; margin-top: auto; }
-.product-card__actions .btn { flex: 1; padding-inline: 0.75rem; }
+.product-card__actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: auto; }
+.product-card__actions .btn { flex: 1; min-width: 110px; padding-inline: 0.5rem; }
 
 /* =========================================================
    MATERIAIS
@@ -1405,8 +1431,11 @@ body::after {
 .insta-item__overlay {
   position: absolute;
   inset: 0;
-  display: grid;
-  place-items: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
   font-family: var(--fonte-mono);
   font-size: 0.6875rem;
   font-weight: 500;
@@ -1417,8 +1446,13 @@ body::after {
   opacity: 0;
   transition: var(--transicao);
 }
+.insta-item__overlay::after {
+  content: '→';
+  transition: var(--transicao);
+}
 .insta-item:hover img, .insta-item:focus-visible img { transform: scale(1.1); }
 .insta-item:hover .insta-item__overlay, .insta-item:focus-visible .insta-item__overlay { opacity: 1; }
+.insta-item:hover .insta-item__overlay::after, .insta-item:focus-visible .insta-item__overlay::after { transform: translateX(4px); }
 
 /* =========================================================
    NEWSLETTER
@@ -1586,7 +1620,8 @@ body::after {
 @media (max-width: 479px) {
   .hero__actions { flex-direction: column; }
   .hero__actions .btn { width: 100%; }
-  .product-card__actions { flex-direction: column; }
+  .product-card__actions { flex-direction: row; flex-wrap: wrap; }
+  .product-card__actions .btn { width: 100%; min-width: 100%; }
   .product-card__quick { opacity: 1; transform: translate(-50%, 0); }
   .product-card__seal { opacity: 1; transform: none; }
   .sobre__actions .btn { width: 100%; }
@@ -1628,9 +1663,7 @@ body::after {
     </nav>
 
     <div class="header__actions">
-      <button class="icon-btn header__sound" id="soundToggle" type="button" aria-label="Ativar som" aria-pressed="false" title="Som de feedback">
-        <svg viewBox="0 0 24 24" aria-hidden="true" id="soundIcon"><path d="M11 5L6 9H3v6h3l5 4V5z"/><path d="M16 9a4 4 0 0 1 0 6"/><path d="M19 6a8 8 0 0 1 0 12"/></svg>
-      </button>
+      <!-- Botão de som foi removido daqui a pedido -->
       <button class="icon-btn" id="searchToggle" type="button" aria-label="Buscar produtos" aria-expanded="false">
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
       </button>
@@ -1975,27 +2008,27 @@ body::after {
       <div class="grid grid--categories">
         <a class="category-card reveal" href="#destaques">
           <div class="category-card__media"><img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=800&q=80" alt="Colares delicados em banho de ouro sobre superfície clara" loading="lazy" width="800" height="1000"></div>
-          <div class="category-card__body"><h3 class="category-card__name">Colares</h3><span class="category-card__link">Explorar →</span></div>
+          <div class="category-card__body"><h3 class="category-card__name">Colares</h3><span class="category-card__link">Explorar</span></div>
         </a>
         <a class="category-card reveal" href="#destaques">
           <div class="category-card__media"><img src="https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=800&q=80" alt="Brincos dourados delicados em exposição" loading="lazy" width="800" height="1000"></div>
-          <div class="category-card__body"><h3 class="category-card__name">Brincos</h3><span class="category-card__link">Explorar →</span></div>
+          <div class="category-card__body"><h3 class="category-card__name">Brincos</h3><span class="category-card__link">Explorar</span></div>
         </a>
         <a class="category-card reveal" href="#destaques">
           <div class="category-card__media"><img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=800&q=80" alt="Anel com zircônia em banho de ouro" loading="lazy" width="800" height="1000"></div>
-          <div class="category-card__body"><h3 class="category-card__name">Anéis</h3><span class="category-card__link">Explorar →</span></div>
+          <div class="category-card__body"><h3 class="category-card__name">Anéis</h3><span class="category-card__link">Explorar</span></div>
         </a>
         <a class="category-card reveal" href="#destaques">
           <div class="category-card__media"><img src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=800&q=80" alt="Pulseira fina de elos dourados" loading="lazy" width="800" height="1000"></div>
-          <div class="category-card__body"><h3 class="category-card__name">Pulseiras</h3><span class="category-card__link">Explorar →</span></div>
+          <div class="category-card__body"><h3 class="category-card__name">Pulseiras</h3><span class="category-card__link">Explorar</span></div>
         </a>
         <a class="category-card reveal" href="#destaques">
           <div class="category-card__media"><img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=800&q=80" alt="Conjunto de colar e brinco combinando" loading="lazy" width="800" height="1000"></div>
-          <div class="category-card__body"><h3 class="category-card__name">Conjuntos</h3><span class="category-card__link">Explorar →</span></div>
+          <div class="category-card__body"><h3 class="category-card__name">Conjuntos</h3><span class="category-card__link">Explorar</span></div>
         </a>
         <a class="category-card reveal" href="#destaques">
           <div class="category-card__media"><img src="https://images.unsplash.com/photo-1620656798579-1984d9e87df7?auto=format&fit=crop&w=800&q=80" alt="Bijuterias infantis delicadas e coloridas" loading="lazy" width="800" height="1000"></div>
-          <div class="category-card__body"><h3 class="category-card__name">Infantil</h3><span class="category-card__link">Explorar →</span></div>
+          <div class="category-card__body"><h3 class="category-card__name">Infantil</h3><span class="category-card__link">Explorar</span></div>
         </a>
       </div>
     </div>
@@ -2010,7 +2043,7 @@ body::after {
           <p class="eyebrow">Escolhidas a dedo</p>
           <h2 class="section__title">Destaques da semana</h2>
         </div>
-        <a class="link-arrow" href="https://wa.me/5521999990000?text=Ol%C3%A1!%20Quero%20ver%20as%20novidades%20da%20semana%20na%20Lume%20Bijoux." target="_blank" rel="noopener">Ver no WhatsApp →</a>
+        <a class="link-arrow" href="https://wa.me/5521999990000?text=Ol%C3%A1!%20Quero%20ver%20as%20novidades%20da%20semana%20na%20Lume%20Bijoux." target="_blank" rel="noopener">Ver no WhatsApp</a>
       </header>
 
       <div class="grid grid--products" id="productGrid">
@@ -2173,19 +2206,19 @@ body::after {
           <span class="material-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4v16M4 12h16"/></svg></span>
           <h3 class="material-card__title">Banho de ouro 18k</h3>
           <p class="material-card__text">Camada espessa sobre latão ou aço, com verniz protetor. Aquele dourado quente que combina com tudo e não desbota fácil.</p>
-          <a class="link-arrow" href="https://wa.me/5521999990000?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20as%20pe%C3%A7as%20em%20banho%20de%20ouro%2018k." target="_blank" rel="noopener">Saiba mais →</a>
+          <a class="link-arrow" href="https://wa.me/5521999990000?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20as%20pe%C3%A7as%20em%20banho%20de%20ouro%2018k." target="_blank" rel="noopener">Saiba mais</a>
         </article>
         <article class="material-card reveal">
           <span class="material-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l7 5-7 13L5 8z"/><path d="M5 8h14"/></svg></span>
           <h3 class="material-card__title">Prata 925</h3>
           <p class="material-card__text">Prata de lei, com teor de 92,5%. Pode escurecer naturalmente — e volta a brilhar com uma flanela e a pastinha certa.</p>
-          <a class="link-arrow" href="https://wa.me/5521999990000?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20as%20pe%C3%A7as%20em%20prata%20925." target="_blank" rel="noopener">Saiba mais →</a>
+          <a class="link-arrow" href="https://wa.me/5521999990000?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20as%20pe%C3%A7as%20em%20prata%20925." target="_blank" rel="noopener">Saiba mais</a>
         </article>
         <article class="material-card reveal">
           <span class="material-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="3"/><path d="M9 12h6"/></svg></span>
           <h3 class="material-card__title">Aço inox</h3>
           <p class="material-card__text">O queridinho de quem vive na correria: não mancha, não enferruja e pode ir à praia e à academia sem drama.</p>
-          <a class="link-arrow" href="https://wa.me/5521999990000?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20as%20pe%C3%A7as%20em%20a%C3%A7o%20inox." target="_blank" rel="noopener">Saiba mais →</a>
+          <a class="link-arrow" href="https://wa.me/5521999990000?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20as%20pe%C3%A7as%20em%20a%C3%A7o%20inox." target="_blank" rel="noopener">Saiba mais</a>
         </article>
       </div>
 
@@ -2315,12 +2348,12 @@ body::after {
       </header>
 
       <div class="grid grid--insta">
-        <a class="insta-item reveal" href="https://instagram.com/lumebijoux" target="_blank" rel="noopener" aria-label="Abrir publicação no Instagram"><img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=600&h=600&q=80" alt="Colar dourado com pedra rosa" loading="lazy" width="600" height="600"><span class="insta-item__overlay" aria-hidden="true">Ver post →</span></a>
-        <a class="insta-item reveal" href="https://instagram.com/lumebijoux" target="_blank" rel="noopener" aria-label="Abrir publicação no Instagram"><img src="https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=600&h=600&q=80" alt="Brincos delicados em exposição" loading="lazy" width="600" height="600"><span class="insta-item__overlay" aria-hidden="true">Ver post →</span></a>
-        <a class="insta-item reveal" href="https://instagram.com/lumebijoux" target="_blank" rel="noopener" aria-label="Abrir publicação no Instagram"><img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=600&h=600&q=80" alt="Anel dourado com zircônia" loading="lazy" width="600" height="600"><span class="insta-item__overlay" aria-hidden="true">Ver post →</span></a>
-        <a class="insta-item reveal" href="https://instagram.com/lumebijoux" target="_blank" rel="noopener" aria-label="Abrir publicação no Instagram"><img src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=600&h=600&q=80" alt="Pulseira dourada de elos" loading="lazy" width="600" height="600"><span class="insta-item__overlay" aria-hidden="true">Ver post →</span></a>
-        <a class="insta-item reveal" href="https://instagram.com/lumebijoux" target="_blank" rel="noopener" aria-label="Abrir publicação no Instagram"><img src="https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=600&h=600&q=80" alt="Colar com pedra natural" loading="lazy" width="600" height="600"><span class="insta-item__overlay" aria-hidden="true">Ver post →</span></a>
-        <a class="insta-item reveal" href="https://instagram.com/lumebijoux" target="_blank" rel="noopener" aria-label="Abrir publicação no Instagram"><img src="https://images.unsplash.com/photo-1596944924616-7b38e7cfac36?auto=format&fit=crop&w=600&h=600&q=80" alt="Brinco pequeno com ponto de luz" loading="lazy" width="600" height="600"><span class="insta-item__overlay" aria-hidden="true">Ver post →</span></a>
+        <a class="insta-item reveal" href="https://instagram.com/lumebijoux" target="_blank" rel="noopener" aria-label="Abrir publicação no Instagram"><img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=600&h=600&q=80" alt="Colar dourado com pedra rosa" loading="lazy" width="600" height="600"><span class="insta-item__overlay" aria-hidden="true">Ver post</span></a>
+        <a class="insta-item reveal" href="https://instagram.com/lumebijoux" target="_blank" rel="noopener" aria-label="Abrir publicação no Instagram"><img src="https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=600&h=600&q=80" alt="Brincos delicados em exposição" loading="lazy" width="600" height="600"><span class="insta-item__overlay" aria-hidden="true">Ver post</span></a>
+        <a class="insta-item reveal" href="https://instagram.com/lumebijoux" target="_blank" rel="noopener" aria-label="Abrir publicação no Instagram"><img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=600&h=600&q=80" alt="Anel dourado com zircônia" loading="lazy" width="600" height="600"><span class="insta-item__overlay" aria-hidden="true">Ver post</span></a>
+        <a class="insta-item reveal" href="https://instagram.com/lumebijoux" target="_blank" rel="noopener" aria-label="Abrir publicação no Instagram"><img src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=600&h=600&q=80" alt="Pulseira dourada de elos" loading="lazy" width="600" height="600"><span class="insta-item__overlay" aria-hidden="true">Ver post</span></a>
+        <a class="insta-item reveal" href="https://instagram.com/lumebijoux" target="_blank" rel="noopener" aria-label="Abrir publicação no Instagram"><img src="https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=600&h=600&q=80" alt="Colar com pedra natural" loading="lazy" width="600" height="600"><span class="insta-item__overlay" aria-hidden="true">Ver post</span></a>
+        <a class="insta-item reveal" href="https://instagram.com/lumebijoux" target="_blank" rel="noopener" aria-label="Abrir publicação no Instagram"><img src="https://images.unsplash.com/photo-1596944924616-7b38e7cfac36?auto=format&fit=crop&w=600&h=600&q=80" alt="Brinco pequeno com ponto de luz" loading="lazy" width="600" height="600"><span class="insta-item__overlay" aria-hidden="true">Ver post</span></a>
       </div>
 
       <div class="section__cta reveal">
@@ -2423,7 +2456,6 @@ body::after {
   };
   const DESCONTO_PIX = 0.05;
   const STORAGE_KEY = 'lume_cart_v1';
-  const SOUND_KEY = 'lume_sound_v1';
 
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => Array.from(c.querySelectorAll(s));
@@ -2434,77 +2466,6 @@ body::after {
     const w = window.open(url, '_blank', 'noopener');
     if (!w) window.location.href = url;
   }
-
-  /* ---------- SOM (Web Audio API) ---------- */
-  let somAtivo = localStorage.getItem(SOUND_KEY) === 'true';
-  let audioCtx = null;
-
-  function playClink() {
-    if (!somAtivo) return;
-    try {
-      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      const now = audioCtx.currentTime;
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(1400, now);
-      osc.frequency.exponentialRampToValueAtTime(1800, now + 0.08);
-      gain.gain.setValueAtTime(0.06, now);
-      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.22);
-      osc.connect(gain).connect(audioCtx.destination);
-      osc.start(now);
-      osc.stop(now + 0.25);
-
-      // segundo tom harmônico
-      const osc2 = audioCtx.createOscillator();
-      const gain2 = audioCtx.createGain();
-      osc2.type = 'sine';
-      osc2.frequency.setValueAtTime(2600, now);
-      gain2.gain.setValueAtTime(0.025, now);
-      gain2.gain.exponentialRampToValueAtTime(0.0001, now + 0.18);
-      osc2.connect(gain2).connect(audioCtx.destination);
-      osc2.start(now);
-      osc2.stop(now + 0.2);
-    } catch (e) {}
-  }
-
-  function playTick() {
-    if (!somAtivo) return;
-    try {
-      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      const now = audioCtx.currentTime;
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(800, now);
-      gain.gain.setValueAtTime(0.03, now);
-      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.08);
-      osc.connect(gain).connect(audioCtx.destination);
-      osc.start(now);
-      osc.stop(now + 0.1);
-    } catch (e) {}
-  }
-
-  // Toggle botão som
-  const soundToggle = $('#soundToggle');
-  function atualizarIconeSom() {
-    if (!soundToggle) return;
-    soundToggle.setAttribute('aria-pressed', String(somAtivo));
-    soundToggle.setAttribute('aria-label', somAtivo ? 'Desativar som' : 'Ativar som');
-    const icon = $('#soundIcon');
-    if (icon) {
-      icon.innerHTML = somAtivo
-        ? '<path d="M11 5L6 9H3v6h3l5 4V5z"/><path d="M16 9a4 4 0 0 1 0 6"/><path d="M19 6a8 8 0 0 1 0 12"/>'
-        : '<path d="M11 5L6 9H3v6h3l5 4V5z"/><path d="M22 9l-6 6"/><path d="M16 9l6 6"/>';
-    }
-  }
-  soundToggle?.addEventListener('click', () => {
-    somAtivo = !somAtivo;
-    localStorage.setItem(SOUND_KEY, String(somAtivo));
-    atualizarIconeSom();
-    if (somAtivo) playClink();
-  });
-  atualizarIconeSom();
 
   /* ---------- HAPTIC ---------- */
   function haptic(pattern = 8) {
@@ -2530,7 +2491,7 @@ body::after {
     if (ex) ex.qty = Math.min(ex.qty + qtd, 99);
     else cart.push({ ...produto, qty: Math.min(qtd, 99) });
     salvarCart(); renderCart(); atualizarBadge(true);
-    playClink(); haptic(12);
+    haptic(12);
     toast(`${produto.name} foi para a sacola`, 'success');
   }
 
@@ -2540,7 +2501,6 @@ body::after {
     item.qty += delta;
     if (item.qty <= 0) cart = cart.filter((i) => i.id !== id);
     salvarCart(); renderCart(); atualizarBadge();
-    playTick();
   }
 
   function removeItem(id) {
@@ -3108,7 +3068,6 @@ body::after {
     }
     fb.textContent = 'Prontinho! Você entrou na lista.';
     input.value = '';
-    playClink();
     toast('Bem-vinda à lista Lume Bijoux!', 'success');
   });
 
